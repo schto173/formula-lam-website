@@ -1,0 +1,22 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['"F1 Wide"', 'sans-serif'],
+      },
+      colors: {
+        brand: {
+          50: '#fff7ed',
+          100: '#ffedd5',
+          500: '#f97316',
+          600: '#ea580c',
+          700: '#c2410c',
+          900: '#7c2d12',
+        },
+      },
+    },
+  },
+  plugins: [],
+};

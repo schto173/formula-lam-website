@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'F1 Wide';
+  src: url('/fonts/Formula1-Wide.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html, body {
+  height: 100%;
+}
+
+/* Display font is stylized and hard to read in long text - use only for
+   short, large headings (hero title, page H1s), never body copy or nav. */
+.font-display {
+  letter-spacing: 0.02em;
+}
+
+body {
+  @apply bg-neutral-50 text-neutral-900;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center rounded-md px-4 py-2 font-medium transition-colors;
+}
+
+.btn-primary {
+  @apply btn bg-brand-600 text-white hover:bg-brand-700;
+}
+
+.btn-secondary {
+  @apply btn bg-neutral-200 text-neutral-900 hover:bg-neutral-300;
+}
+
+.btn-danger {
+  @apply btn bg-red-600 text-white hover:bg-red-700;
+}
+
+.card {
+  @apply rounded-lg border border-neutral-200 bg-white p-6 shadow-sm;
+}
+
+.input {
+  @apply w-full rounded-md border border-neutral-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500;
+}
+
+.label {
+  @apply mb-1 block text-sm font-medium text-neutral-700;
+}
