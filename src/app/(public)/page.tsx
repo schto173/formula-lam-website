@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
 import { getSiteSettings } from '@/lib/settings';
 
@@ -12,6 +13,20 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-16">
+      {settings.heroImageUrl && (
+        <div className="overflow-hidden rounded-xl bg-neutral-200">
+          <Image
+            src={settings.heroImageUrl}
+            alt={settings.teamName}
+            width={1600}
+            height={900}
+            className="h-auto w-full object-cover"
+            priority
+            unoptimized
+          />
+        </div>
+      )}
+
       <section className="text-center">
         <h1 className="font-display text-4xl font-extrabold tracking-tight text-neutral-900 sm:text-5xl">
           {settings.teamName}
