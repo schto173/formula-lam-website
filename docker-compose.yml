@@ -8,6 +8,8 @@ services:
       POSTGRES_PASSWORD: ${DB_PASS:?set DB_PASS in .env}
     volumes:
       - ./data/db:/var/lib/postgresql/data
+    networks:
+      - internal
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-ecomarathon} -d ${DB_NAME:-ecomarathon}"]
       interval: 10s
@@ -31,6 +33,7 @@ services:
       - ./data/uploads:/app/uploads
     networks:
       - traefik_default
+      - internal
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.eco-dashboard.rule=Host(`formula.tome.lu`)"
@@ -41,3 +44,4 @@ services:
 networks:
   traefik_default:
     external: true
+  internal:
