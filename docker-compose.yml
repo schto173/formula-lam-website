@@ -37,10 +37,10 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik_default"
-      - "traefik.http.routers.eco-dashboard.rule=Host(`formula.tome.lu`)"
-      - "traefik.http.routers.eco-dashboard.entrypoints=websecure"
-      - "traefik.http.routers.eco-dashboard.tls.certresolver=letsencrypt"
-      - "traefik.http.services.eco-dashboard.loadbalancer.server.port=${APP_PORT:-3000}"
+      - "traefik.http.routers.formula-lam.rule=Host(`formula.tome.lu`)"
+      - "traefik.http.routers.formula-lam.entrypoints=websecure"
+      - "traefik.http.routers.formula-lam.tls.certresolver=letsencrypt"
+      - "traefik.http.services.formula-lam.loadbalancer.server.port=${APP_PORT:-3000}"
 
 networks:
   traefik_default:
