@@ -6,5 +6,5 @@ build/
 *.log
 npm-debug.log*
 .DS_Store
-uploads/
-data/
+/uploads/
+/data/
