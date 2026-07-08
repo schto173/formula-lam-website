@@ -3,6 +3,7 @@ import { logoutAction } from '@/lib/admin-actions';
 
 const NAV_ITEMS = [
   { href: '/admin/dashboard', label: 'Dashboard' },
+  { href: '/admin/home', label: 'Home Page' },
   { href: '/admin/members', label: 'Members' },
   { href: '/admin/news', label: 'News' },
   { href: '/admin/positions', label: 'Positions' },

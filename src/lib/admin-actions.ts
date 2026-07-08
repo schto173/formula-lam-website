@@ -325,6 +325,58 @@ export async function deleteVehiclePhoto(id: string) {
   revalidatePath('/car');
 }
 
+// ---- Home Topics ----
+
+export async function createHomeTopic(formData: FormData) {
+  await requireAdmin();
+  const image = formData.get('image') as File | null;
+  let imageUrl: string | undefined;
+  if (image && image.size > 0) {
+    imageUrl = await saveUploadedImage(image);
+  }
+
+  await prisma.homeTopic.create({
+    data: {
+      title: String(formData.get('title') || ''),
+      description: String(formData.get('description') || ''),
+      sortOrder: Number(formData.get('sortOrder') || 0),
+      active: formData.get('active') === 'on',
+      imageUrl,
+    },
+  });
+  revalidatePath('/admin/home');
+  revalidatePath('/');
+}
+
+export async function updateHomeTopic(id: string, formData: FormData) {
+  await requireAdmin();
+  const image = formData.get('image') as File | null;
+  let imageUrl: string | undefined;
+  if (image && image.size > 0) {
+    imageUrl = await saveUploadedImage(image);
+  }
+
+  await prisma.homeTopic.update({
+    where: { id },
+    data: {
+      title: String(formData.get('title') || ''),
+      description: String(formData.get('description') || ''),
+      sortOrder: Number(formData.get('sortOrder') || 0),
+      active: formData.get('active') === 'on',
+      ...(imageUrl ? { imageUrl } : {}),
+    },
+  });
+  revalidatePath('/admin/home');
+  revalidatePath('/');
+}
+
+export async function deleteHomeTopic(id: string) {
+  await requireAdmin();
+  await prisma.homeTopic.delete({ where: { id } });
+  revalidatePath('/admin/home');
+  revalidatePath('/');
+}
+
 // ---- Settings ----
 
 export async function updateSettings(formData: FormData) {

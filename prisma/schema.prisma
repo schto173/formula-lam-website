@@ -104,3 +104,14 @@ model VehiclePhoto {
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
 }
+
+model HomeTopic {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  imageUrl    String?
+  sortOrder   Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

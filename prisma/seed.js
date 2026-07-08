@@ -262,6 +262,59 @@ const POSITIONS = [
   },
 ];
 
+const HOME_TOPICS = [
+  {
+    title: 'The Challenge',
+    description:
+      "It's not about speed — it's about efficiency. In the Shell Eco-marathon, teams from across Europe answer one question: who can travel the furthest on the energy of a single litre of fuel? Every single millilitre counts.",
+  },
+  {
+    title: 'Designing & Building the Car',
+    description:
+      'We build our prototype from the ground up — chassis, bodywork and a lightweight, aerodynamic shell shaped for minimum drag and maximum efficiency.',
+  },
+  {
+    title: 'Mechanical & Electrical Engineering',
+    description:
+      'Powertrain, drivetrain, steering and brakes on the mechanical side; wiring, sensors, motor control and safety systems on the electrical side. Every component is tuned to save energy.',
+  },
+  {
+    title: 'Informatics & Telemetry',
+    description:
+      'Our own software and live telemetry system stream data straight from the car — GPS position, engine data, lap times and fuel consumption — so we can follow every run in real time and analyse it afterwards.',
+  },
+  {
+    title: 'Race Week at the Track',
+    description:
+      'For one intense week we live at the circuit, camping right next to the racetrack and working out of our paddock from early morning until late evening.',
+  },
+  {
+    title: 'Technical Inspection & Prep',
+    description:
+      'Before we can compete, the car must pass a strict technical inspection. Between runs we are constantly maintaining, repairing and fine-tuning to keep it race-ready.',
+  },
+  {
+    title: 'Driving, Strategy & Competition',
+    description:
+      'Drivers complete timed attempts within tight limits while the team refines strategy lap by lap. Every touch of throttle and every metre of coasting shapes the final result.',
+  },
+  {
+    title: 'The Journey',
+    description:
+      'Getting there and back is part of the adventure — long road trips across Europe with the car, the tools and the whole team on board.',
+  },
+  {
+    title: 'Life at Camp',
+    description:
+      "It's not all work. Building tents, cooking barbecue, evenings around the fire and the friendships that form are what make the experience unforgettable.",
+  },
+  {
+    title: 'Beyond the Race',
+    description:
+      'Alongside the efficiency runs, we take part in other awards and challenges — from design and communication to teamwork and innovation.',
+  },
+];
+
 async function main() {
   const adminUser = process.env.ADMIN_USER || 'admin';
   const adminPassword = process.env.ADMIN_PASSWORD;
@@ -340,6 +393,14 @@ async function main() {
       ],
     });
     console.log('Seeded placeholder sponsors.');
+  }
+
+  const homeTopicCount = await prisma.homeTopic.count();
+  if (homeTopicCount === 0) {
+    await prisma.homeTopic.createMany({
+      data: HOME_TOPICS.map((topic, i) => ({ ...topic, sortOrder: i })),
+    });
+    console.log(`Seeded ${HOME_TOPICS.length} home page topics.`);
   }
 
   await prisma.vehicle.upsert({
