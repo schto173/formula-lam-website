@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: ${DB_USER:-ecomarathon}
       POSTGRES_PASSWORD: ${DB_PASS:?set DB_PASS in .env}
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - ./data/db:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-ecomarathon} -d ${DB_NAME:-ecomarathon}"]
       interval: 10s
@@ -27,11 +27,17 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:?set ADMIN_PASSWORD in .env}
       UPLOAD_DIR: /app/uploads
       NODE_ENV: production
-    ports:
-      - "${APP_PORT:-3000}:3000"
     volumes:
-      - uploads-data:/app/uploads
+      - ./data/uploads:/app/uploads
+    networks:
+      - traefik_default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.eco-dashboard.rule=Host(`formula.tome.lu`)"
+      - "traefik.http.routers.eco-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.eco-dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.services.eco-dashboard.loadbalancer.server.port=${APP_PORT:-3000}"
 
-volumes:
-  db-data:
-  uploads-data:
+networks:
+  traefik_default:
+    external: true
