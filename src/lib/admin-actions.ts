@@ -335,6 +335,12 @@ export async function updateSettings(formData: FormData) {
     heroImageUrl = await saveUploadedImage(hero);
   }
 
+  const teamPhoto = formData.get('teamPhoto') as File | null;
+  let teamPhotoUrl: string | undefined;
+  if (teamPhoto && teamPhoto.size > 0) {
+    teamPhotoUrl = await saveUploadedImage(teamPhoto);
+  }
+
   await prisma.siteSettings.upsert({
     where: { id: 1 },
     update: {
@@ -343,6 +349,7 @@ export async function updateSettings(formData: FormData) {
       aboutText: String(formData.get('aboutText') || ''),
       contactEmail: String(formData.get('contactEmail') || ''),
       ...(heroImageUrl ? { heroImageUrl } : {}),
+      ...(teamPhotoUrl ? { teamPhotoUrl } : {}),
     },
     create: {
       id: 1,
@@ -351,8 +358,10 @@ export async function updateSettings(formData: FormData) {
       aboutText: String(formData.get('aboutText') || ''),
       contactEmail: String(formData.get('contactEmail') || ''),
       heroImageUrl,
+      teamPhotoUrl,
     },
   });
   revalidatePath('/admin/settings');
+  revalidatePath('/team');
   revalidatePath('/');
 }

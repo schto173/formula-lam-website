@@ -33,6 +33,15 @@ export default async function AdminSettingsPage() {
           )}
           <input className="input" name="heroImage" type="file" accept="image/*" />
         </div>
+        <div>
+          <label className="label">Team Group Photo</label>
+          {settings.teamPhotoUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={settings.teamPhotoUrl} alt="Team group" className="mb-2 h-40 w-full rounded object-cover" />
+          )}
+          <input className="input" name="teamPhoto" type="file" accept="image/*" />
+          <p className="mt-1 text-xs text-neutral-500">Large banner image shown at the top of the Team page.</p>
+        </div>
         <button type="submit" className="btn-primary">Save Settings</button>
       </form>
     </div>

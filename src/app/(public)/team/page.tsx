@@ -1,16 +1,33 @@
 import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
+import { getSiteSettings } from '@/lib/settings';
 
 export const metadata = { title: 'Team' };
 
 export default async function TeamPage() {
-  const members = await prisma.member.findMany({
-    where: { active: true },
-    orderBy: { sortOrder: 'asc' },
-  });
+  const [members, settings] = await Promise.all([
+    prisma.member.findMany({
+      where: { active: true },
+      orderBy: { sortOrder: 'asc' },
+    }),
+    getSiteSettings(),
+  ]);
 
   return (
     <div>
+      {settings.teamPhotoUrl && (
+        <div className="mb-10 overflow-hidden rounded-xl bg-neutral-200">
+          <Image
+            src={settings.teamPhotoUrl}
+            alt="The team"
+            width={1600}
+            height={900}
+            className="h-auto w-full object-cover"
+            priority
+            unoptimized
+          />
+        </div>
+      )}
       <h1 className="font-display mb-8 text-3xl font-bold">Our Team</h1>
       {members.length === 0 ? (
         <p className="text-neutral-500">No team members listed yet.</p>

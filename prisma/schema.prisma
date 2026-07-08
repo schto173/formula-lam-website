@@ -21,6 +21,7 @@ model SiteSettings {
   aboutText    String   @default("")
   contactEmail String   @default("")
   heroImageUrl String?
+  teamPhotoUrl String?
   updatedAt    DateTime @updatedAt
 }
 
