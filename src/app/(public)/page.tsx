@@ -110,7 +110,19 @@ export default async function HomePage() {
         ) : (
           <div className="grid gap-6 sm:grid-cols-3">
             {latestNews.map((post) => (
-              <Link key={post.id} href={`/news/${post.slug}`} className="card block hover:shadow-md">
+              <Link key={post.id} href={`/news/${post.slug}`} className="card block overflow-hidden hover:shadow-md">
+                {post.coverImageUrl && (
+                  <div className="mb-3 -mx-6 -mt-6 aspect-video overflow-hidden bg-neutral-200">
+                    <Image
+                      src={post.coverImageUrl}
+                      alt={post.title}
+                      width={400}
+                      height={225}
+                      className="h-full w-full object-cover"
+                      unoptimized
+                    />
+                  </div>
+                )}
                 <h3 className="font-semibold text-neutral-900">{post.title}</h3>
                 <p className="mt-2 text-sm text-neutral-600">{post.excerpt}</p>
               </Link>
